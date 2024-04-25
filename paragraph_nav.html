@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Crimson+Pro">
+<meta charset="UTF-8">
+<title>Textabsatz-Teiler</title>
+<style>
+    body {
+        font-family: 'Roboto', serif;
+        background-color: #CDCFD1;
+        padding: 1%;
+    }
+
+
+</style>
+</head>
+<body>
+<h2>Text verteilen</h2>
+<textarea id="inputText" rows="10" cols="50" placeholder="Text hier eingeben..."></textarea><br>
+<button onclick="splitText()">Teilen</button>
+<div id="output"></div>
+
+<script>
+function splitText() {
+    const text = document.getElementById('inputText').value;
+    const maxLen = 50;
+    const paragraphs = text.split(/\n+/); // Teile den Text in Absätze basierend auf Zeilenumbrüchen
+    let outputHtml = '';
+
+    paragraphs.forEach(paragraph => {
+        const words = paragraph.split(' ');
+        let currentParagraph = '';
+
+        words.forEach(word => {
+            if (currentParagraph.length + word.length + 1 > maxLen) {
+                outputHtml += '<p>' + currentParagraph.trim() + '</p>';
+                currentParagraph = word;
+            } else {
+                if (currentParagraph) {
+                    currentParagraph += ' ';
+                }
+                currentParagraph += word;
+            }
+        });
+
+        if (currentParagraph) {
+            outputHtml += '<p>' + currentParagraph.trim() + '</p>';
+        }
+    });
+
+    document.getElementById('output').innerHTML = outputHtml;
+}
+</script>
+</body>
+</html>
